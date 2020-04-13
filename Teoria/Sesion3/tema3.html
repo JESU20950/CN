@@ -1,0 +1,318 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge,IE=9,chrome=1"><meta name="generator" content="MATLAB R2018b"><title>Mètode de la biscció</title><style type="text/css">.rtcContent { padding: 30px; } .CodeBlock { background-color: #F7F7F7; margin: 10px 0 10px 0;}
+.S0 { border-left: 1px solid rgb(233, 233, 233); border-right: 1px solid rgb(233, 233, 233); border-top: 1px solid rgb(233, 233, 233); border-bottom: 1px solid rgb(233, 233, 233); border-radius: 4px; padding: 6px 45px 4px 13px; line-height: 17.2339992523193px; min-height: 18px; white-space: nowrap; color: rgb(0, 0, 0); font-family: Menlo, Monaco, Consolas, 'Courier New', monospace; font-size: 14px;  }
+.S1 { margin: 3px 10px 5px 4px; padding: 0px; line-height: 20px; min-height: 0px; white-space: pre-wrap; color: rgb(60, 60, 60); font-family: Helvetica, Arial, sans-serif; font-style: normal; font-size: 20px; font-weight: bold; text-align: left;  }
+.S2 { margin: 20px 10px 5px 4px; padding: 0px; line-height: 20px; min-height: 0px; white-space: pre-wrap; color: rgb(60, 60, 60); font-family: Helvetica, Arial, sans-serif; font-style: normal; font-size: 20px; font-weight: bold; text-align: left;  }
+.S3 { margin: 15px 10px 5px 4px; padding: 0px; line-height: 28.7999992370605px; min-height: 0px; white-space: pre-wrap; color: rgb(213, 80, 0); font-family: Helvetica, Arial, sans-serif; font-style: normal; font-size: 24px; font-weight: normal; text-align: left;  }
+.S4 { border-left: 1px solid rgb(233, 233, 233); border-right: 1px solid rgb(233, 233, 233); border-top: 1px solid rgb(233, 233, 233); border-bottom: 0px none rgb(0, 0, 0); border-radius: 4px 4px 0px 0px; padding: 6px 45px 0px 13px; line-height: 17.2339992523193px; min-height: 18px; white-space: nowrap; color: rgb(0, 0, 0); font-family: Menlo, Monaco, Consolas, 'Courier New', monospace; font-size: 14px;  }
+.S5 { border-left: 1px solid rgb(233, 233, 233); border-right: 1px solid rgb(233, 233, 233); border-top: 0px none rgb(0, 0, 0); border-bottom: 0px none rgb(0, 0, 0); border-radius: 0px; padding: 0px 45px 0px 13px; line-height: 17.2339992523193px; min-height: 18px; white-space: nowrap; color: rgb(0, 0, 0); font-family: Menlo, Monaco, Consolas, 'Courier New', monospace; font-size: 14px;  }
+.S6 { border-left: 1px solid rgb(233, 233, 233); border-right: 1px solid rgb(233, 233, 233); border-top: 0px none rgb(0, 0, 0); border-bottom: 1px solid rgb(233, 233, 233); border-radius: 0px 0px 4px 4px; padding: 0px 45px 4px 13px; line-height: 17.2339992523193px; min-height: 18px; white-space: nowrap; color: rgb(0, 0, 0); font-family: Menlo, Monaco, Consolas, 'Courier New', monospace; font-size: 14px;  }</style></head><body><div class = rtcContent><div class="CodeBlock"><div class="inlineWrapper"><div  class = 'S0'><span style="white-space: pre;"><span>A = [1 1]</span></span></div></div></div><h2  class = 'S1'><span>-------------------------------------------------------------------------</span></h2><h2  class = 'S2'><span>Resolució de equacions no lineals </span></h2><h1  class = 'S3'><span>Mètode de la biscció</span></h1><div class="CodeBlock"><div class="inlineWrapper"><div  class = 'S4'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">function </span><span>[alpha] = </span><span class="warning_squiggle_rte">bisection</span><span>(f,a,b,eta,maxiter)</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">if </span><span>(f(a)*f(b) &gt;= 0)</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        </span><span class="warning_squiggle_rte warningHighlight">display</span><span>(</span><span style="color: rgb(160, 32, 240);">'Error valores a y b'</span><span>);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    iter = 0;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    t = []</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">while</span><span>(abs(b-a) &gt; eta &amp;&amp; iter &lt; maxiter &amp;&amp; abs(b-a) &gt; eps)</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        alpha = (a+b)/2;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        f_alpha = f(alpha);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        </span><span class="warning_squiggle_rte">t</span><span> = [t; iter a b alpha f_alpha];</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        iter = iter+1;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        </span><span style="color: rgb(0, 0, 255);">if </span><span>(sign(f(alpha)) == sign(f(b)))</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>            b = alpha;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        </span><span style="color: rgb(0, 0, 255);">else</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>            a = alpha;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        </span><span style="color: rgb(0, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    </span><span class="warning_squiggle_rte">t</span><span> = array2table(t,</span><span style="color: rgb(160, 32, 240);">'VariableNames'</span><span>,{</span><span style="color: rgb(160, 32, 240);">'iter'</span><span>,</span><span style="color: rgb(160, 32, 240);">'a'</span><span>, </span><span style="color: rgb(160, 32, 240);">'b'</span><span>, </span><span style="color: rgb(160, 32, 240);">'alpha'</span><span>, </span><span style="color: rgb(160, 32, 240);">'falpha'</span><span>})</span></span></div></div><div class="inlineWrapper"><div  class = 'S6'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">end</span></span></div></div></div><h1  class = 'S3'><span>Mètode de newton</span></h1><div class="CodeBlock"><div class="inlineWrapper"><div  class = 'S4'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">function </span><span>[alpha]= </span><span class="warning_squiggle_rte">newton</span><span>(f ,df, a ,maxiter,tolf,tolx)</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    iter =  0;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    alpha = a - f(a)/df(a);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    t = [iter  alpha f(alpha) (alpha-a)];</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">while </span><span>(iter &lt; maxiter &amp;&amp; abs(alpha-a) &gt;= tolx &amp;&amp; abs(f(alpha)) &gt;= tolf )</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        a = alpha;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        alpha = a - f(a)/df(a);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        iter = iter +1;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        </span><span class="warning_squiggle_rte">t</span><span> = [t;iter  alpha f(alpha) (alpha-a)];</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    alpha = t(end-1, 2);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    </span><span class="warning_squiggle_rte">t</span><span> = array2table(t(1:end-1,:),</span><span style="color: rgb(160, 32, 240);">'VariableNames'</span><span>,{</span><span style="color: rgb(160, 32, 240);">'iter'</span><span>,</span><span style="color: rgb(160, 32, 240);">'x'</span><span>, </span><span style="color: rgb(160, 32, 240);">'falpha'</span><span>, </span><span style="color: rgb(160, 32, 240);">'alphamenosx'</span><span>})</span></span></div></div><div class="inlineWrapper"><div  class = 'S6'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">end</span></span></div></div></div><h1  class = 'S3'><span>Mètode de la secant</span></h1><div class="CodeBlock"><div class="inlineWrapper"><div  class = 'S4'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">function </span><span>[alpha]= </span><span class="warning_squiggle_rte">secant</span><span>(f,a,b,tolx,tolf,maxiter)</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>   iter = 0;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>   xnmenos1 = a</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>   xn = b;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>   xnmas1 = xn-f(xn)*((xn-xnmenos1)/(f(xn)-f(xnmenos1)));</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>   t = [iter  xnmas1 f(xnmas1) (xnmas1-xn)];</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>   </span><span style="color: rgb(0, 0, 255);">while </span><span>(iter &lt; maxiter &amp;&amp; abs(xnmas1-xn) &gt;= tolx &amp;&amp; abs(f(xnmas1)) &gt;= tolf )</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        xnmenos1 = xn;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        xn = xnmas1;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        xnmas1 = xn-f(xn)*((xn-xnmenos1)/(f(xn)-f(xnmenos1)));</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        iter = iter +1;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        </span><span class="warning_squiggle_rte">t</span><span> = [t; iter  xnmas1 f(xnmas1) (xnmas1-xn)];</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>   </span><span style="color: rgb(0, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>   alpha = t(end-1, 2);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>   </span><span class="warning_squiggle_rte">t</span><span> = array2table(t(1:end-1,:),</span><span style="color: rgb(160, 32, 240);">'VariableNames'</span><span>,{</span><span style="color: rgb(160, 32, 240);">'iter'</span><span>,</span><span style="color: rgb(160, 32, 240);">'xmas1'</span><span>, </span><span style="color: rgb(160, 32, 240);">'fxmas1'</span><span>, </span><span style="color: rgb(160, 32, 240);">'xnmas1menosxn'</span><span>})</span></span></div></div><div class="inlineWrapper"><div  class = 'S6'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">end</span></span></div></div></div><h1  class = 'S3'><span>Mètode de la regula falsi</span></h1><div class="CodeBlock"><div class="inlineWrapper"><div  class = 'S4'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">function </span><span>[</span><span class="warning_squiggle_rte">xalpha</span><span>] = </span><span class="warning_squiggle_rte">regulafalsi</span><span>(f,a,b,beta,maxiter)</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    iter = 0;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    t = [];</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">while</span><span>(abs(b-a) &gt; beta &amp;&amp; iter &lt; maxiter &amp;&amp; abs(b-a) &gt; eps)</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        alpha= (f(b)*a-f(a)*b)/(f(b)-f(a));</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        </span><span class="warning_squiggle_rte">t</span><span> = [t; iter a b alpha f(alpha)];</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        iter=iter+1;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        </span><span style="color: rgb(0, 0, 255);">if</span><span>(sign(f(alpha)) == sign(f(b)))</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>            b=alpha;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        </span><span style="color: rgb(0, 0, 255);">else</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>            a=alpha;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        </span><span style="color: rgb(0, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    </span><span class="warning_squiggle_rte">t</span><span> = array2table(t,</span><span style="color: rgb(160, 32, 240);">'VariableNames'</span><span>,{</span><span style="color: rgb(160, 32, 240);">'iter'</span><span>,</span><span style="color: rgb(160, 32, 240);">'a'</span><span>, </span><span style="color: rgb(160, 32, 240);">'b'</span><span>, </span><span style="color: rgb(160, 32, 240);">'xn'</span><span>, </span><span style="color: rgb(160, 32, 240);">'fxn'</span><span>})</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S6'></div></div></div><h1  class = 'S3'><span>Mètode del punt fix o Mètode de la iteració simple</span></h1><div class="CodeBlock"><div class="inlineWrapper"><div  class = 'S4'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">function </span><span>[xn] = </span><span class="warning_squiggle_rte">itera</span><span>(f, g, dg, x1, maxiter, tolf, tolx)</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">if </span><span>abs(dg(x1))&lt;1</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        xnmas1 = x1;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        xn = x1;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        k = 0;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        R  = [k,x1,Inf,Inf];</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        cotaf=Inf; </span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        cotax=Inf;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        </span><span style="color: rgb(0, 0, 255);">while</span><span>(abs(cotaf) &gt;tolf &amp;&amp;  abs(cotax) &gt; tolx &amp;&amp; k&lt; maxiter)</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>            xn = xnmas1;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>            xnmas1 = g(xnmas1);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>            k = k+1;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>            cotaf = abs(f(xnmas1));</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>            cotax = abs(xnmas1-xn);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>            </span><span class="warning_squiggle_rte">R</span><span>  = [R ;k xnmas1 cotaf cotax];</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        </span><span style="color: rgb(0, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        R = R(1:(end-1),:);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        </span><span class="warning_squiggle_rte">T1</span><span> = array2table(R,</span><span style="color: rgb(160, 32, 240);">'VariableNames'</span><span>,{</span><span style="color: rgb(160, 32, 240);">'k'</span><span>,</span><span style="color: rgb(160, 32, 240);">'x_n'</span><span>,</span><span style="color: rgb(160, 32, 240);">'tolf'</span><span>,</span><span style="color: rgb(160, 32, 240);">'tolx'</span><span>})</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">else </span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        fprintf(</span><span style="color: rgb(160, 32, 240);">'\n Mètode divergent\n'</span><span>)</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S6'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">end</span></span></div></div></div><h1  class = 'S3'><span>Convergència "a priori"</span></h1><div class="CodeBlock"><div class="inlineWrapper"><div  class = 'S4'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">function </span><span class="warning_squiggle_rte">convergencia_a_priori</span><span>(dg,t)</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    y=ones(size(t));</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    plot(t,dg(t),t,y,</span><span style="color: rgb(160, 32, 240);">'r'</span><span>,t,-y,</span><span style="color: rgb(160, 32, 240);">'r'</span><span>);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    dgt = dg(t)</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    </span><span style="color: rgb(34, 139, 34);">%si -1&lt;=dgt&lt;= 1 convergente sino divergente</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    dgt(dgt&gt;1) = 2;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    dgt(dgt&lt;-1) = 2;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">if </span><span>ismember(2,dgt)</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        title(</span><span style="color: rgb(160, 32, 240);">'Divergente'</span><span>)</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">else</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        title(</span><span style="color: rgb(160, 32, 240);">'Convergente'</span><span>)</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S6'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">end</span></span></div></div></div><h1  class = 'S3'><span>Mètode d'Aitken</span></h1><div class="CodeBlock"><div class="inlineWrapper"><div  class = 'S4'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">function </span><span>[A] = </span><span class="warning_squiggle_rte">aitkenfixpt</span><span>(</span><span class="warning_squiggle_rte warningHighlight">f</span><span>, g, dg, x0, maxiter, tol)</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        A = [];</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        </span><span style="color: rgb(0, 0, 255);">if </span><span>abs(dg(x0)) &lt; 1</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>            </span><span style="color: rgb(34, 139, 34);">%Metode d'Aitken</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>            i = 0;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>            </span><span style="color: rgb(0, 0, 255);">while </span><span>(i &lt; maxiter &amp;&amp; abs(x0) &gt; tol)</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>                x1 = g(x0);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>                x2 = g(x1);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>                aitkenX = (x2*x0-x1^2)/(x2-2*x1+x0);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>                </span><span class="warning_squiggle_rte">A</span><span> = [A; aitkenX];</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>                x0 = aitkenX;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>                i = i+1;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>            </span><span style="color: rgb(0, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        </span><span style="color: rgb(0, 0, 255);">else</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>            fprintf(</span><span style="color: rgb(160, 32, 240);">'Mètode divergent\n'</span><span>)</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        </span><span style="color: rgb(0, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S6'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">end</span></span></div></div></div><h1  class = 'S3'><span>Mètode de Steffensen</span></h1><div class="CodeBlock"><div class="inlineWrapper"><div  class = 'S4'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">function </span><span>[A] = </span><span class="warning_squiggle_rte">steffensenfixpt</span><span>(</span><span class="warning_squiggle_rte warningHighlight">f</span><span>, g, dg, x0, maxiter, tol)</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        A = [];</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        </span><span style="color: rgb(0, 0, 255);">if </span><span>abs(dg(x0)) &lt; 1</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>            i = 0;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>            </span><span style="color: rgb(0, 0, 255);">while </span><span>(i &lt; maxiter &amp;&amp; abs(x0) &gt; tol)</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>                x1 = g(x0);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>                x2 = g(x1);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>                steffensenX = x0-(x1-x0)^2/(x2-2*x1+x0);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>                </span><span class="warning_squiggle_rte">A</span><span> = [A; steffensenX];</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>                x0 = steffensenX;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>                i = i+1;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>            </span><span style="color: rgb(0, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        </span><span style="color: rgb(0, 0, 255);">else</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>            fprintf(</span><span style="color: rgb(160, 32, 240);">'Mètode divergent\n'</span><span>)</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        </span><span style="color: rgb(0, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S6'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">end</span></span></div></div></div><h2  class = 'S2'><span>-------------------------------------------------------------------------</span></h2><h2  class = 'S2'><span>Resolució de sistemes d'equacions no lineals</span></h2><h1  class = 'S3'><span>Metodo punto fijo</span></h1><div class="CodeBlock"><div class="inlineWrapper"><div  class = 'S4'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">function </span><span>alpha = </span><span class="warning_squiggle_rte">metodo_punto_fijo</span><span>(G,F,Z,Nmax,tol)</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    k=0; </span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    tolZ=norm(Z);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    FZ=F(Z(1),Z(2)); </span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    tolF= norm(FZ); </span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    </span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">while </span><span>(k&lt;Nmax &amp;&amp; (tolF&gt;tol || tolZ&gt;tol))</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        Zold=Z;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        Z=G(Z(1),Z(2));</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        tolF=norm(F(Z(1),Z(2)));</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        tolZ=norm(Z-Zold);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        k=k+1;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    alpha=Z;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    fprintf(</span><span style="color: rgb(160, 32, 240);">'\n'</span><span>)</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    disp([</span><span style="color: rgb(160, 32, 240);">'solución = '</span><span>,num2str(Z')]);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    disp([</span><span style="color: rgb(160, 32, 240);">'tolF = '</span><span>,num2str(tolF)]);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    disp([</span><span style="color: rgb(160, 32, 240);">'tolZ = '</span><span>,num2str(tolZ)]);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    disp([</span><span style="color: rgb(160, 32, 240);">'iteraciones = '</span><span>,num2str(k)]);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    fprintf(</span><span style="color: rgb(160, 32, 240);">'\n'</span><span>)</span></span></div></div><div class="inlineWrapper"><div  class = 'S6'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">end</span></span></div></div></div><h1  class = 'S3'><span>Metodo Newton</span></h1><div class="CodeBlock"><div class="inlineWrapper"><div  class = 'S4'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">function </span><span>alpha = </span><span class="error_squiggle_rte">newton</span><span>(F,DF,Z,Nmax,tolF,tolZ)</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span style="color: rgb(34, 139, 34);">% Mètode de Newton per a funcions de dues variables</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    k=0; cotaF=1; cotaZ=1;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    FZ=F(Z(1),Z(2)); </span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    DFZ=DF(Z(1),Z(2)); </span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">while </span><span>(k&lt;Nmax &amp;&amp; (cotaF&gt;tolF || cotaZ&gt;tolZ))</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        Zold=Z;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        Y=DFZ\(-FZ);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        Z=Zold+Y;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        cotaZ=norm(Y);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        DFZ=DF(Z(1),Z(2));</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        FZ=F(Z(1),Z(2));</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        cotaF=norm(FZ);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        k=k+1;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    alpha=Z;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    fprintf(</span><span style="color: rgb(160, 32, 240);">'\n'</span><span>)</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    disp([</span><span style="color: rgb(160, 32, 240);">'solución = '</span><span>,num2str(Z')]);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    disp([</span><span style="color: rgb(160, 32, 240);">'tolF = '</span><span>,num2str(cotaF)]);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    disp([</span><span style="color: rgb(160, 32, 240);">'tolZ = '</span><span>,num2str(cotaZ)]);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    disp([</span><span style="color: rgb(160, 32, 240);">'iteraciones = '</span><span>,num2str(k)]);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    fprintf(</span><span style="color: rgb(160, 32, 240);">'\n'</span><span>)</span></span></div></div><div class="inlineWrapper"><div  class = 'S6'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">end</span></span></div></div></div><h1  class = 'S3'><span>Variants del mètode de Newton</span></h1><h1  class = 'S3'><span>Newton modificat</span></h1><div class="CodeBlock"><div class="inlineWrapper"><div  class = 'S4'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">function </span><span>alpha = </span><span class="warning_squiggle_rte">newton_newtonmodificat</span><span>(F,DF,Z,Nmax,tolF,tolZ)</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span style="color: rgb(34, 139, 34);">% Mètode de Newton per a funcions de dues variables</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    k=0; cotaF=1; cotaZ=1;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    FZ=F(Z(1),Z(2)); </span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    DFZ=DF(Z(1),Z(2)); </span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">while </span><span>(k&lt;Nmax &amp;&amp; (cotaF&gt;tolF || cotaZ&gt;tolZ))</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        Zold=Z;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        Y=DFZ\(-FZ);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        Z=Zold+Y;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        cotaZ=norm(Y);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        FZ=F(Z(1),Z(2));</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        cotaF=norm(FZ);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        k=k+1;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    alpha=Z;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    fprintf(</span><span style="color: rgb(160, 32, 240);">'\n'</span><span>)</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    disp([</span><span style="color: rgb(160, 32, 240);">'solución = '</span><span>,num2str(Z')]);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    disp([</span><span style="color: rgb(160, 32, 240);">'tolF = '</span><span>,num2str(cotaF)]);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    disp([</span><span style="color: rgb(160, 32, 240);">'tolZ = '</span><span>,num2str(cotaZ)]);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    disp([</span><span style="color: rgb(160, 32, 240);">'iteraciones = '</span><span>,num2str(k)]);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    fprintf(</span><span style="color: rgb(160, 32, 240);">'\n'</span><span>)</span></span></div></div><div class="inlineWrapper"><div  class = 'S6'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">end</span></span></div></div></div><h1  class = 'S3'><span>Metode de Jacobi</span></h1><div class="CodeBlock"><div class="inlineWrapper"><div  class = 'S4'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">function </span><span>alpha = </span><span class="warning_squiggle_rte">newton_metodejacobi</span><span>(F,DF,Z,Nmax,tolF,tolZ)</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span style="color: rgb(34, 139, 34);">% Mètode de Newton per a funcions de dues variables</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    k=0; cotaF=1; cotaZ=1;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    FZ=F(Z(1),Z(2)); </span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    DFZ=DF(Z(1),Z(2)); </span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    DFZ = diag(diag(DFZ));</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">while </span><span>(k&lt;Nmax &amp;&amp; (cotaF&gt;tolF || cotaZ&gt;tolZ))</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        Zold=Z;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        Y=DFZ\(-FZ);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        Z=Zold+Y;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        cotaZ=norm(Y);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        DFZ=DF(Z(1),Z(2));</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        DFZ = diag(diag(DFZ));</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        FZ=F(Z(1),Z(2));</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        cotaF=norm(FZ);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        k=k+1;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    alpha=Z;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    fprintf(</span><span style="color: rgb(160, 32, 240);">'\n'</span><span>)</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    disp([</span><span style="color: rgb(160, 32, 240);">'solución = '</span><span>,num2str(Z')]);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    disp([</span><span style="color: rgb(160, 32, 240);">'tolF = '</span><span>,num2str(cotaF)]);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    disp([</span><span style="color: rgb(160, 32, 240);">'tolZ = '</span><span>,num2str(cotaZ)]);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    disp([</span><span style="color: rgb(160, 32, 240);">'iteraciones = '</span><span>,num2str(k)]);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    fprintf(</span><span style="color: rgb(160, 32, 240);">'\n'</span><span>)</span></span></div></div><div class="inlineWrapper"><div  class = 'S6'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">end</span></span></div></div></div><h1  class = 'S3'><span>Metode de Gauss Seidel</span></h1><div class="CodeBlock"><div class="inlineWrapper"><div  class = 'S4'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">function </span><span>alpha = </span><span class="warning_squiggle_rte">newton_metodegauss_seidel</span><span>(F,DF,Z,Nmax,tolF,tolZ)</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span style="color: rgb(34, 139, 34);">% Mètode de Newton per a funcions de dues variables</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    k=0; cotaF=1; cotaZ=1;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    FZ=F(Z(1),Z(2)); </span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    DFZ=DF(Z(1),Z(2)); </span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    DFZ = tril(DFZ);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">while </span><span>(k&lt;Nmax &amp;&amp; (cotaF&gt;tolF || cotaZ&gt;tolZ))</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        Zold=Z;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        Y=DFZ\(-FZ);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        Z=Zold+Y;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        cotaZ=norm(Y);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        DFZ=DF(Z(1),Z(2));</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        DFZ = tril(DFZ);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        FZ=F(Z(1),Z(2));</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        cotaF=norm(FZ);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        k=k+1;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    alpha=Z;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    fprintf(</span><span style="color: rgb(160, 32, 240);">'\n'</span><span>)</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    disp([</span><span style="color: rgb(160, 32, 240);">'solución = '</span><span>,num2str(Z')]);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    disp([</span><span style="color: rgb(160, 32, 240);">'tolF = '</span><span>,num2str(cotaF)]);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    disp([</span><span style="color: rgb(160, 32, 240);">'tolZ = '</span><span>,num2str(cotaZ)]);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    disp([</span><span style="color: rgb(160, 32, 240);">'iteraciones = '</span><span>,num2str(k)]);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    fprintf(</span><span style="color: rgb(160, 32, 240);">'\n'</span><span>)</span></span></div></div><div class="inlineWrapper"><div  class = 'S6'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">end</span></span></div></div></div><h1  class = 'S3'><span>Metode de SOR</span></h1><div class="CodeBlock"><div class="inlineWrapper"><div  class = 'S4'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">function </span><span>alpha = </span><span class="warning_squiggle_rte">newton_metodoSOR</span><span>(F,DF,Z,Nmax,tolF,tolZ,rho)</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span style="color: rgb(34, 139, 34);">% Mètode de Newton per a funcions de dues variables</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    k=0; cotaF=1; cotaZ=1;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    FZ=F(Z(1),Z(2)); </span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    DFZ=rho*diag(diag(DF(Z(1),Z(2)))) + tril(DF(Z(1),Z(2))); </span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">while </span><span>(k&lt;Nmax &amp;&amp; (cotaF&gt;tolF || cotaZ&gt;tolZ))</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        Zold=Z;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        Y=DFZ\(-FZ);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        Z=Zold+Y;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        cotaZ=norm(Y);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        DFZ= rho*diag(diag(DF(Z(1),Z(2)))) + tril(DF(Z(1),Z(2)));</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        FZ=F(Z(1),Z(2));</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        cotaF=norm(FZ);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>        k=k+1;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    alpha=Z;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    fprintf(</span><span style="color: rgb(160, 32, 240);">'\n'</span><span>)</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    disp([</span><span style="color: rgb(160, 32, 240);">'solución = '</span><span>,num2str(Z')]);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    disp([</span><span style="color: rgb(160, 32, 240);">'tolF = '</span><span>,num2str(cotaF)]);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    disp([</span><span style="color: rgb(160, 32, 240);">'tolZ = '</span><span>,num2str(cotaZ)]);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    disp([</span><span style="color: rgb(160, 32, 240);">'iteraciones = '</span><span>,num2str(k)]);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre;"><span>    fprintf(</span><span style="color: rgb(160, 32, 240);">'\n'</span><span>)</span></span></div></div><div class="inlineWrapper"><div  class = 'S6'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">end</span></span></div></div></div></div><br>
+<!-- 
+##### SOURCE BEGIN #####
+A = [1 1]
+%% REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-
+%% Resolució de equacions no lineals 
+%% Mètode de la biscció
+%%
+function [alpha] = bisection(f,a,b,eta,maxiter)
+    if (f(a)*f(b) >= 0)
+        display('Error valores a y b');
+    end
+    iter = 0;
+    t = []
+    while(abs(b-a) > eta && iter < maxiter && abs(b-a) > eps)
+        alpha = (a+b)/2;
+        f_alpha = f(alpha);
+        t = [t; iter a b alpha f_alpha];
+        iter = iter+1;
+        if (sign(f(alpha)) == sign(f(b)))
+            b = alpha;
+        else
+            a = alpha;
+        end
+    end
+    t = array2table(t,'VariableNames',{'iter','a', 'b', 'alpha', 'falpha'})
+end
+%% Mètode de newton
+
+function [alpha]= newton(f ,df, a ,maxiter,tolf,tolx)
+    iter =  0;
+    alpha = a - f(a)/df(a);
+    t = [iter  alpha f(alpha) (alpha-a)];
+    while (iter < maxiter && abs(alpha-a) >= tolx && abs(f(alpha)) >= tolf )
+        a = alpha;
+        alpha = a - f(a)/df(a);
+        iter = iter +1;
+        t = [t;iter  alpha f(alpha) (alpha-a)];
+    end
+    alpha = t(end-1, 2);
+    t = array2table(t(1:end-1,:),'VariableNames',{'iter','x', 'falpha', 'alphamenosx'})
+end
+%% Mètode de la secant
+
+function [alpha]= secant(f,a,b,tolx,tolf,maxiter)
+   iter = 0;
+   xnmenos1 = a
+   xn = b;
+   xnmas1 = xn-f(xn)*((xn-xnmenos1)/(f(xn)-f(xnmenos1)));
+   t = [iter  xnmas1 f(xnmas1) (xnmas1-xn)];
+   while (iter < maxiter && abs(xnmas1-xn) >= tolx && abs(f(xnmas1)) >= tolf )
+        xnmenos1 = xn;
+        xn = xnmas1;
+        xnmas1 = xn-f(xn)*((xn-xnmenos1)/(f(xn)-f(xnmenos1)));
+        iter = iter +1;
+        t = [t; iter  xnmas1 f(xnmas1) (xnmas1-xn)];
+   end
+   alpha = t(end-1, 2);
+   t = array2table(t(1:end-1,:),'VariableNames',{'iter','xmas1', 'fxmas1', 'xnmas1menosxn'})
+end
+%% Mètode de la regula falsi
+
+function [xalpha] = regulafalsi(f,a,b,beta,maxiter)
+    iter = 0;
+    t = [];
+    while(abs(b-a) > beta && iter < maxiter && abs(b-a) > eps)
+        alpha= (f(b)*a-f(a)*b)/(f(b)-f(a));
+        t = [t; iter a b alpha f(alpha)];
+        iter=iter+1;
+        if(sign(f(alpha)) == sign(f(b)))
+            b=alpha;
+        else
+            a=alpha;
+        end
+    end
+    t = array2table(t,'VariableNames',{'iter','a', 'b', 'xn', 'fxn'})
+end
+
+%% Mètode del punt fix o Mètode de la iteració simple
+
+function [xn] = itera(f, g, dg, x1, maxiter, tolf, tolx)
+    if abs(dg(x1))<1
+        xnmas1 = x1;
+        xn = x1;
+        k = 0;
+        R  = [k,x1,Inf,Inf];
+        cotaf=Inf; 
+        cotax=Inf;
+        while(abs(cotaf) >tolf &&  abs(cotax) > tolx && k< maxiter)
+            xn = xnmas1;
+            xnmas1 = g(xnmas1);
+            k = k+1;
+            cotaf = abs(f(xnmas1));
+            cotax = abs(xnmas1-xn);
+            R  = [R ;k xnmas1 cotaf cotax];
+        end
+        R = R(1:(end-1),:);
+        T1 = array2table(R,'VariableNames',{'k','x_n','tolf','tolx'})
+    else 
+        fprintf('\n Mètode divergent\n')
+    end
+end
+%% Convergència "a priori"
+
+function convergencia_a_priori(dg,t)
+    y=ones(size(t));
+    plot(t,dg(t),t,y,'r',t,-y,'r');
+    dgt = dg(t)
+    %si -1<=dgt<= 1 convergente sino divergente
+    dgt(dgt>1) = 2;
+    dgt(dgt<-1) = 2;
+    if ismember(2,dgt)
+        title('Divergente')
+    else
+        title('Convergente')
+    end
+end
+%% Mètode d'Aitken
+
+function [A] = aitkenfixpt(f, g, dg, x0, maxiter, tol)
+        A = [];
+        if abs(dg(x0)) < 1
+            %Metode d'Aitken
+            i = 0;
+            while (i < maxiter && abs(x0) > tol)
+                x1 = g(x0);
+                x2 = g(x1);
+                aitkenX = (x2*x0-x1^2)/(x2-2*x1+x0);
+                A = [A; aitkenX];
+                x0 = aitkenX;
+                i = i+1;
+            end
+        else
+            fprintf('Mètode divergent\n')
+        end
+end
+%% Mètode de Steffensen
+
+function [A] = steffensenfixpt(f, g, dg, x0, maxiter, tol)
+        A = [];
+        if abs(dg(x0)) < 1
+            i = 0;
+            while (i < maxiter && abs(x0) > tol)
+                x1 = g(x0);
+                x2 = g(x1);
+                steffensenX = x0-(x1-x0)^2/(x2-2*x1+x0);
+                A = [A; steffensenX];
+                x0 = steffensenX;
+                i = i+1;
+            end
+        else
+            fprintf('Mètode divergent\n')
+        end
+end
+%% REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-
+%% Resolució de sistemes d'equacions no lineals
+%% Metodo punto fijo
+
+function alpha = metodo_punto_fijo(G,F,Z,Nmax,tol)
+    k=0; 
+    tolZ=norm(Z);
+    FZ=F(Z(1),Z(2)); 
+    tolF= norm(FZ); 
+    
+    while (k<Nmax && (tolF>tol || tolZ>tol))
+        Zold=Z;
+        Z=G(Z(1),Z(2));
+        tolF=norm(F(Z(1),Z(2)));
+        tolZ=norm(Z-Zold);
+        k=k+1;
+    end
+    alpha=Z;
+    fprintf('\n')
+    disp(['solución = ',num2str(Z')]);
+    disp(['tolF = ',num2str(tolF)]);
+    disp(['tolZ = ',num2str(tolZ)]);
+    disp(['iteraciones = ',num2str(k)]);
+    fprintf('\n')
+end
+%% Metodo Newton
+
+function alpha = newton(F,DF,Z,Nmax,tolF,tolZ)
+% Mètode de Newton per a funcions de dues variables
+    k=0; cotaF=1; cotaZ=1;
+    FZ=F(Z(1),Z(2)); 
+    DFZ=DF(Z(1),Z(2)); 
+    while (k<Nmax && (cotaF>tolF || cotaZ>tolZ))
+        Zold=Z;
+        Y=DFZ\(-FZ);
+        Z=Zold+Y;
+        cotaZ=norm(Y);
+        DFZ=DF(Z(1),Z(2));
+        FZ=F(Z(1),Z(2));
+        cotaF=norm(FZ);
+        k=k+1;
+    end
+    alpha=Z;
+    fprintf('\n')
+    disp(['solución = ',num2str(Z')]);
+    disp(['tolF = ',num2str(cotaF)]);
+    disp(['tolZ = ',num2str(cotaZ)]);
+    disp(['iteraciones = ',num2str(k)]);
+    fprintf('\n')
+end
+%% Variants del mètode de Newton
+%% Newton modificat
+
+function alpha = newton_newtonmodificat(F,DF,Z,Nmax,tolF,tolZ)
+% Mètode de Newton per a funcions de dues variables
+    k=0; cotaF=1; cotaZ=1;
+    FZ=F(Z(1),Z(2)); 
+    DFZ=DF(Z(1),Z(2)); 
+    while (k<Nmax && (cotaF>tolF || cotaZ>tolZ))
+        Zold=Z;
+        Y=DFZ\(-FZ);
+        Z=Zold+Y;
+        cotaZ=norm(Y);
+        FZ=F(Z(1),Z(2));
+        cotaF=norm(FZ);
+        k=k+1;
+    end
+    alpha=Z;
+    fprintf('\n')
+    disp(['solución = ',num2str(Z')]);
+    disp(['tolF = ',num2str(cotaF)]);
+    disp(['tolZ = ',num2str(cotaZ)]);
+    disp(['iteraciones = ',num2str(k)]);
+    fprintf('\n')
+end
+%% Metode de Jacobi
+
+function alpha = newton_metodejacobi(F,DF,Z,Nmax,tolF,tolZ)
+% Mètode de Newton per a funcions de dues variables
+    k=0; cotaF=1; cotaZ=1;
+    FZ=F(Z(1),Z(2)); 
+    DFZ=DF(Z(1),Z(2)); 
+    DFZ = diag(diag(DFZ));
+    while (k<Nmax && (cotaF>tolF || cotaZ>tolZ))
+        Zold=Z;
+        Y=DFZ\(-FZ);
+        Z=Zold+Y;
+        cotaZ=norm(Y);
+        DFZ=DF(Z(1),Z(2));
+        DFZ = diag(diag(DFZ));
+        FZ=F(Z(1),Z(2));
+        cotaF=norm(FZ);
+        k=k+1;
+    end
+    alpha=Z;
+    fprintf('\n')
+    disp(['solución = ',num2str(Z')]);
+    disp(['tolF = ',num2str(cotaF)]);
+    disp(['tolZ = ',num2str(cotaZ)]);
+    disp(['iteraciones = ',num2str(k)]);
+    fprintf('\n')
+end
+%% Metode de Gauss Seidel
+
+function alpha = newton_metodegauss_seidel(F,DF,Z,Nmax,tolF,tolZ)
+% Mètode de Newton per a funcions de dues variables
+    k=0; cotaF=1; cotaZ=1;
+    FZ=F(Z(1),Z(2)); 
+    DFZ=DF(Z(1),Z(2)); 
+    DFZ = tril(DFZ);
+    while (k<Nmax && (cotaF>tolF || cotaZ>tolZ))
+        Zold=Z;
+        Y=DFZ\(-FZ);
+        Z=Zold+Y;
+        cotaZ=norm(Y);
+        DFZ=DF(Z(1),Z(2));
+        DFZ = tril(DFZ);
+        FZ=F(Z(1),Z(2));
+        cotaF=norm(FZ);
+        k=k+1;
+    end
+    alpha=Z;
+    fprintf('\n')
+    disp(['solución = ',num2str(Z')]);
+    disp(['tolF = ',num2str(cotaF)]);
+    disp(['tolZ = ',num2str(cotaZ)]);
+    disp(['iteraciones = ',num2str(k)]);
+    fprintf('\n')
+end
+%% Metode de SOR
+
+function alpha = newton_metodoSOR(F,DF,Z,Nmax,tolF,tolZ,rho)
+% Mètode de Newton per a funcions de dues variables
+    k=0; cotaF=1; cotaZ=1;
+    FZ=F(Z(1),Z(2)); 
+    DFZ=rho*diag(diag(DF(Z(1),Z(2)))) + tril(DF(Z(1),Z(2))); 
+    while (k<Nmax && (cotaF>tolF || cotaZ>tolZ))
+        Zold=Z;
+        Y=DFZ\(-FZ);
+        Z=Zold+Y;
+        cotaZ=norm(Y);
+        DFZ= rho*diag(diag(DF(Z(1),Z(2)))) + tril(DF(Z(1),Z(2)));
+        FZ=F(Z(1),Z(2));
+        cotaF=norm(FZ);
+        k=k+1;
+    end
+    alpha=Z;
+    fprintf('\n')
+    disp(['solución = ',num2str(Z')]);
+    disp(['tolF = ',num2str(cotaF)]);
+    disp(['tolZ = ',num2str(cotaZ)]);
+    disp(['iteraciones = ',num2str(k)]);
+    fprintf('\n')
+end
+##### SOURCE END #####
+--></body></html>
