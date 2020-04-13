@@ -1,0 +1,471 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge,IE=9,chrome=1"><meta name="generator" content="MATLAB R2018b"><title>FORWARD. Forward elimination</title><style type="text/css">.rtcContent { padding: 30px; } .CodeBlock { background-color: #F7F7F7; margin: 10px 0 10px 0;}
+.S0 { border-left: 1px solid rgb(233, 233, 233); border-right: 1px solid rgb(233, 233, 233); border-top: 1px solid rgb(233, 233, 233); border-bottom: 1px solid rgb(233, 233, 233); border-radius: 4px 4px 0px 0px; padding: 6px 45px 4px 13px; line-height: 17.2339992523193px; min-height: 18px; white-space: nowrap; color: rgb(0, 0, 0); font-family: Menlo, Monaco, Consolas, 'Courier New', monospace; font-size: 14px;  }
+.S1 { color: rgb(64, 64, 64); padding: 10px 0px 6px 17px; background: rgb(255, 255, 255) none repeat scroll 0% 0% / auto padding-box border-box; font-family: Menlo, Monaco, Consolas, 'Courier New', monospace; font-size: 14px; overflow-x: hidden; line-height: 17.2339992523193px;  }
+.variableValue { width: 100% !important; }
+.embeddedOutputsMatrixElement,.eoOutputWrapper .matrixElement {min-height: 18px; box-sizing: border-box;}
+.embeddedOutputsMatrixElement .matrixElement,.eoOutputWrapper .matrixElement,.rtcDataTipElement .matrixElement {position: relative;}
+.matrixElement .variableValue,.rtcDataTipElement .matrixElement .variableValue {white-space: pre; display: inline-block; vertical-align: top; overflow: hidden;}
+.embeddedOutputsMatrixElement.inlineElement {}
+.embeddedOutputsMatrixElement.inlineElement .topHeaderWrapper {display: none;}
+.embeddedOutputsMatrixElement.inlineElement .veTable .body {padding-top: 0 !important; max-height: 100px;}
+.inlineElement .matrixElement {max-height: 300px;}
+.embeddedOutputsMatrixElement.rightPaneElement {}
+.rightPaneElement .matrixElement,.rtcDataTipElement .matrixElement {overflow: hidden; padding-left: 9px;}
+.rightPaneElement .matrixElement {margin-bottom: -1px;}
+.embeddedOutputsMatrixElement .matrixElement .valueContainer,.eoOutputWrapper .matrixElement .valueContainer,.rtcDataTipElement .matrixElement .valueContainer {white-space: nowrap; margin-bottom: 3px;}
+.embeddedOutputsMatrixElement .matrixElement .valueContainer .horizontalEllipsis.hide,.embeddedOutputsMatrixElement .matrixElement .verticalEllipsis.hide,.eoOutputWrapper .matrixElement .valueContainer .horizontalEllipsis.hide,.eoOutputWrapper .matrixElement .verticalEllipsis.hide,.rtcDataTipElement .matrixElement .valueContainer .horizontalEllipsis.hide,.rtcDataTipElement .matrixElement .verticalEllipsis.hide {display: none;}
+.embeddedOutputsVariableMatrixElement .matrixElement .valueContainer.hideEllipses .verticalEllipsis, .embeddedOutputsVariableMatrixElement .matrixElement .valueContainer.hideEllipses .horizontalEllipsis {display:none;}
+.embeddedOutputsMatrixElement .matrixElement .valueContainer .horizontalEllipsis,.eoOutputWrapper .matrixElement .valueContainer .horizontalEllipsis {margin-bottom: -3px;}
+.eoOutputWrapper .embeddedOutputsVariableMatrixElement .matrixElement .valueContainer {cursor: default !important;}
+.embeddedOutputsVariableElement {white-space: pre-wrap; word-wrap: break-word; min-height: 18px; max-height: 250px; overflow: auto;}
+.variableElement {}
+.embeddedOutputsVariableElement.inlineElement {}
+.inlineElement .variableElement {}
+.embeddedOutputsVariableElement.rightPaneElement {min-height: 16px;}
+.rightPaneElement .variableElement {padding-top: 2px; padding-left: 9px;}
+.variableNameElement {margin-bottom: 3px; display: inline-block;}
+.matrixElement .horizontalEllipsis,.rtcDataTipElement .matrixElement .horizontalEllipsis {display: inline-block; margin-top: 3px; width: 30px; height: 12px; background-repeat: no-repeat; background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB0AAAAJCAYAAADO1CeCAAAAJUlEQVR42mP4//8/A70xw0i29BUDFPxnAEtTW37wWDqakIa4pQDvOOG89lHX2gAAAABJRU5ErkJggg==");}
+.matrixElement .verticalEllipsis,.textElement .verticalEllipsis,.rtcDataTipElement .matrixElement .verticalEllipsis,.rtcDataTipElement .textElement .verticalEllipsis {margin-left: 35px; width: 12px; height: 30px; background-repeat: no-repeat; background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAZCAYAAAAIcL+IAAAALklEQVR42mP4//8/AzGYgWyFMECMwv8QddRS+P//KyimlmcGUOFoOI6GI/UVAgDnd8Dd4+NCwgAAAABJRU5ErkJggg==");}
+.S2 { border-left: 1px solid rgb(233, 233, 233); border-right: 1px solid rgb(233, 233, 233); border-top: 1px solid rgb(233, 233, 233); border-bottom: 0px none rgb(0, 0, 0); border-radius: 0px; padding: 6px 45px 0px 13px; line-height: 17.2339992523193px; min-height: 18px; white-space: nowrap; color: rgb(0, 0, 0); font-family: Menlo, Monaco, Consolas, 'Courier New', monospace; font-size: 14px;  }
+.S3 { border-left: 1px solid rgb(233, 233, 233); border-right: 1px solid rgb(233, 233, 233); border-top: 0px none rgb(0, 0, 0); border-bottom: 0px none rgb(0, 0, 0); border-radius: 0px; padding: 0px 45px 0px 13px; line-height: 17.2339992523193px; min-height: 18px; white-space: nowrap; color: rgb(0, 0, 0); font-family: Menlo, Monaco, Consolas, 'Courier New', monospace; font-size: 14px;  }
+.S4 { border-left: 1px solid rgb(233, 233, 233); border-right: 1px solid rgb(233, 233, 233); border-top: 0px none rgb(0, 0, 0); border-bottom: 1px solid rgb(233, 233, 233); border-radius: 0px; padding: 0px 45px 4px 13px; line-height: 17.2339992523193px; min-height: 18px; white-space: nowrap; color: rgb(0, 0, 0); font-family: Menlo, Monaco, Consolas, 'Courier New', monospace; font-size: 14px;  }
+.S5 { border-left: 1px solid rgb(233, 233, 233); border-right: 1px solid rgb(233, 233, 233); border-top: 1px solid rgb(233, 233, 233); border-bottom: 1px solid rgb(233, 233, 233); border-radius: 0px; padding: 6px 45px 4px 13px; line-height: 17.2339992523193px; min-height: 18px; white-space: nowrap; color: rgb(0, 0, 0); font-family: Menlo, Monaco, Consolas, 'Courier New', monospace; font-size: 14px;  }
+.S6 { border-left: 1px solid rgb(233, 233, 233); border-right: 1px solid rgb(233, 233, 233); border-top: 1px solid rgb(233, 233, 233); border-bottom: 1px solid rgb(233, 233, 233); border-radius: 4px; padding: 6px 45px 4px 13px; line-height: 17.2339992523193px; min-height: 18px; white-space: nowrap; color: rgb(0, 0, 0); font-family: Menlo, Monaco, Consolas, 'Courier New', monospace; font-size: 14px;  }
+.S7 { margin: 15px 10px 5px 4px; padding: 0px; line-height: 28.7999992370605px; min-height: 0px; white-space: pre-wrap; color: rgb(213, 80, 0); font-family: Helvetica, Arial, sans-serif; font-style: normal; font-size: 24px; font-weight: normal; text-align: left;  }
+.S8 { border-left: 1px solid rgb(233, 233, 233); border-right: 1px solid rgb(233, 233, 233); border-top: 1px solid rgb(233, 233, 233); border-bottom: 0px none rgb(0, 0, 0); border-radius: 4px 4px 0px 0px; padding: 6px 45px 0px 13px; line-height: 17.2339992523193px; min-height: 18px; white-space: nowrap; color: rgb(0, 0, 0); font-family: Menlo, Monaco, Consolas, 'Courier New', monospace; font-size: 14px;  }
+.S9 { border-left: 1px solid rgb(233, 233, 233); border-right: 1px solid rgb(233, 233, 233); border-top: 0px none rgb(0, 0, 0); border-bottom: 1px solid rgb(233, 233, 233); border-radius: 0px 0px 4px 4px; padding: 0px 45px 4px 13px; line-height: 17.2339992523193px; min-height: 18px; white-space: nowrap; color: rgb(0, 0, 0); font-family: Menlo, Monaco, Consolas, 'Courier New', monospace; font-size: 14px;  }
+.S10 { margin: 20px 10px 5px 4px; padding: 0px; line-height: 20px; min-height: 0px; white-space: pre-wrap; color: rgb(60, 60, 60); font-family: Helvetica, Arial, sans-serif; font-style: normal; font-size: 20px; font-weight: bold; text-align: left;  }
+.S11 { margin: 15px 10px 5px 4px; padding: 0px; line-height: 18px; min-height: 0px; white-space: pre-wrap; color: rgb(60, 60, 60); font-family: Helvetica, Arial, sans-serif; font-style: normal; font-size: 17px; font-weight: bold; text-align: left;  }
+.S12 { margin: 2px 10px 9px 4px; padding: 0px; line-height: 21px; min-height: 0px; white-space: pre-wrap; color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif; font-style: normal; font-size: 14px; font-weight: normal; text-align: left;  }
+.S13 { margin: 10px 10px 9px 4px; padding: 0px; line-height: 21px; min-height: 0px; white-space: pre-wrap; color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif; font-style: normal; font-size: 14px; font-weight: normal; text-align: left;  }</style></head><body><div class = rtcContent><div class="CodeBlock"><div class="inlineWrapper outputs"><div  class = 'S0'><span style="white-space: pre;"><span>A = [1 0 -1; 1 2 1;2 2 3]</span></span></div><div  class = 'S1'><div class="inlineElement eoOutputWrapper embeddedOutputsVariableMatrixElement" uid="16C7BC6B" data-scroll-top="null" data-scroll-left="null" data-width="546" data-testid="output_0" style="width: 576px; white-space: normal; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"><div class="matrixElement veSpecifier" style="white-space: normal; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"><div class="veVariableName variableNameElement double" style="width: 546px; white-space: normal; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"><span style="white-space: normal; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;">A = </span><span class="veVariableValueSummary veMetaSummary" style="white-space: normal; font-style: normal; color: rgb(179, 179, 179); font-size: 12px;">3×3</span></div><div class="valueContainer" data-layout="{&quot;columnWidth&quot;:40,&quot;totalColumns&quot;:3,&quot;totalRows&quot;:3,&quot;charsPerColumn&quot;:6}" style="white-space: nowrap; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"><div class="variableValue" style="width: 122px; white-space: pre; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;">     1     0    -1
+     1     2     1
+     2     2     3
+</div><div class="horizontalEllipsis hide" style="white-space: nowrap; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"></div><div class="verticalEllipsis hide" style="white-space: nowrap; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"></div></div></div></div></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre;"><span style="color: rgb(34, 139, 34);">%x0 = [1 1 1]';</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>Niter = Inf;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>tol = eps;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span style="color: rgb(34, 139, 34);">%[vap,vep,~,~]= metodo_potencia_valor_propio_modulo_maximo(A,x0, Niter, tol)</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span style="color: rgb(34, 139, 34);">%[vap,vep,~,~] = metodo_potencia_valor_propio_modulo_minimo(A, x0, Niter, tol)</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span style="color: rgb(34, 139, 34);">%[vap,vep,~,~]= metodo_potencia_valor_propio_modulo_maximo_quociente_rayleigh(A,x0, Niter, tol)</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span style="color: rgb(34, 139, 34);">%[vap,vep,~,~]= metodo_potencia_valor_propio_modulo_minimo_quociente_rayleigh(A, x0, Niter, tol)</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span style="color: rgb(34, 139, 34);">%eig(A)</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span style="color: rgb(34, 139, 34);">%[V,S] = eig(A)</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span style="color: rgb(34, 139, 34);">%max(abs(eig(A)))</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span style="color: rgb(34, 139, 34);">%</span><span style="color: rgb(34, 139, 34);">min(abs(eig(A)))</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span style="color: rgb(34, 139, 34);">%[vap,iteracions] = metodoQR(A, Niter, tol)</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span style="color: rgb(34, 139, 34);">%A = [1 0 -1; 1 2 1;2 2 3];</span></span></div></div><div class="inlineWrapper outputs"><div  class = 'S4'><span style="white-space: pre;"><span style="color: rgb(34, 139, 34);">%</span><span style="color: rgb(34, 139, 34);">[U, S, V] = svd(A)</span></span></div><div  class = 'S1'><div class="inlineElement eoOutputWrapper embeddedOutputsVariableMatrixElement" uid="8C734E78" data-scroll-top="null" data-scroll-left="null" data-width="546" data-testid="output_1" style="width: 576px; white-space: normal; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"><div class="matrixElement veSpecifier" style="white-space: normal; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"><div class="veVariableName variableNameElement double" style="width: 546px; white-space: normal; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"><span style="white-space: normal; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;">U = </span><span class="veVariableValueSummary veMetaSummary" style="white-space: normal; font-style: normal; color: rgb(179, 179, 179); font-size: 12px;">3×3</span></div><div class="valueContainer" data-layout="{&quot;columnWidth&quot;:66,&quot;totalColumns&quot;:3,&quot;totalRows&quot;:3,&quot;charsPerColumn&quot;:10}" style="white-space: nowrap; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"><div class="variableValue" style="width: 200px; white-space: pre; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;">    0.0434    0.9261    0.3749
+   -0.4878    0.3471   -0.8010
+   -0.8719   -0.1481    0.4668
+</div><div class="horizontalEllipsis hide" style="white-space: nowrap; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"></div><div class="verticalEllipsis hide" style="white-space: nowrap; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"></div></div></div></div><div class="inlineElement eoOutputWrapper embeddedOutputsVariableMatrixElement" uid="B1008492" data-scroll-top="null" data-scroll-left="null" data-width="546" data-testid="output_2" style="width: 576px; white-space: normal; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"><div class="matrixElement veSpecifier" style="white-space: normal; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"><div class="veVariableName variableNameElement double" style="width: 546px; white-space: normal; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"><span style="white-space: normal; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;">S = </span><span class="veVariableValueSummary veMetaSummary" style="white-space: normal; font-style: normal; color: rgb(179, 179, 179); font-size: 12px;">3×3</span></div><div class="valueContainer" data-layout="{&quot;columnWidth&quot;:66,&quot;totalColumns&quot;:3,&quot;totalRows&quot;:3,&quot;charsPerColumn&quot;:10}" style="white-space: nowrap; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"><div class="variableValue" style="width: 200px; white-space: pre; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;">    4.6995         0         0
+         0    1.4697         0
+         0         0    0.8687
+</div><div class="horizontalEllipsis hide" style="white-space: nowrap; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"></div><div class="verticalEllipsis hide" style="white-space: nowrap; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"></div></div></div></div><div class="inlineElement eoOutputWrapper embeddedOutputsVariableMatrixElement" uid="0CCE734C" data-scroll-top="null" data-scroll-left="null" data-width="546" data-testid="output_3" style="width: 576px; white-space: normal; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"><div class="matrixElement veSpecifier" style="white-space: normal; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"><div class="veVariableName variableNameElement double" style="width: 546px; white-space: normal; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"><span style="white-space: normal; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;">V = </span><span class="veVariableValueSummary veMetaSummary" style="white-space: normal; font-style: normal; color: rgb(179, 179, 179); font-size: 12px;">3×3</span></div><div class="valueContainer" data-layout="{&quot;columnWidth&quot;:66,&quot;totalColumns&quot;:3,&quot;totalRows&quot;:3,&quot;charsPerColumn&quot;:10}" style="white-space: nowrap; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"><div class="variableValue" style="width: 200px; white-space: pre; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;">   -0.4656    0.6648    0.5842
+   -0.5786    0.2708   -0.7693
+   -0.6696   -0.6963    0.2586
+</div><div class="horizontalEllipsis hide" style="white-space: nowrap; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"></div><div class="verticalEllipsis hide" style="white-space: nowrap; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"></div></div></div></div></div></div><div class="inlineWrapper outputs"><div  class = 'S5'><span style="white-space: pre;"><span style="color: rgb(34, 139, 34);">%[valors_singulars] = SVD(A)</span></span></div><div  class = 'S1'><div class="inlineElement eoOutputWrapper embeddedOutputsVariableMatrixElement" uid="38F3E990" data-scroll-top="null" data-scroll-left="null" data-width="546" data-testid="output_4" style="width: 576px; white-space: normal; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"><div class="matrixElement veSpecifier" style="white-space: normal; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"><div class="veVariableName variableNameElement double" style="width: 546px; white-space: normal; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"><span style="white-space: normal; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;">valors_singulars = </span><span class="veVariableValueSummary veMetaSummary" style="white-space: normal; font-style: normal; color: rgb(179, 179, 179); font-size: 12px;">3×1</span></div><div class="valueContainer" data-layout="{&quot;columnWidth&quot;:66,&quot;totalColumns&quot;:1,&quot;totalRows&quot;:3,&quot;charsPerColumn&quot;:10}" style="white-space: nowrap; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"><div class="variableValue" style="width: 68px; white-space: pre; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;">    0.8687
+    1.4697
+    4.6995
+</div><div class="horizontalEllipsis hide" style="white-space: nowrap; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"></div><div class="verticalEllipsis hide" style="white-space: nowrap; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"></div></div></div></div></div></div></div><div class="CodeBlock"><div class="inlineWrapper"><div  class = 'S6'></div></div></div><h1  class = 'S7'><span>FORWARD. Forward elimination</span></h1><div class="CodeBlock"><div class="inlineWrapper"><div  class = 'S8'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">function </span><span>x = forward(L,x)</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span style="color: rgb(34, 139, 34);">% FORWARD. Forward elimination.</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span style="color: rgb(34, 139, 34);">% For lower triangular L, x = forward(L,b) solves L*x = b.</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>[n,n] = size(L);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>x(1) = x(1)/L(1,1);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">for </span><span>k = 2:n</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>   j = 1:k-1;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>   x(k) = (x(k) - L(k,j)*x(j))/L(k,k);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">end</span></span></div></div></div><h1  class = 'S7'><span>BACKSUBS.  Back substitution.</span></h1><div class="CodeBlock"><div class="inlineWrapper"><div  class = 'S8'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">function </span><span>x = backsubs(U,x)</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span style="color: rgb(34, 139, 34);">% BACKSUBS.  Back substitution.</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span style="color: rgb(34, 139, 34);">% For upper triangular U, x = backsubs(U,b) solves U*x = b.</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>[n,n] = size(U);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>x(n) = x(n)/U(n,n);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">for </span><span>k = n-1:-1:1</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>   j = k+1:n;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>   x(k) = (x(k) - U(k,j)*x(j))/U(k,k);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'></div></div></div><h2  class = 'S10'><span></span></h2><h2  class = 'S10'><span>--------------------------------------------------------------------------------------------------------------------------------------</span></h2><h2  class = 'S10'><span></span></h2><h2  class = 'S10'><span>Resolució de sistemes lineals no homogenis</span></h2><div class="CodeBlock"><div class="inlineWrapper"><div  class = 'S6'><span style="white-space: pre;"><span style="color: rgb(34, 139, 34);">%x = A\b</span></span></div></div></div><h3  class = 'S11'><span style=' text-decoration: underline;'>Mètodes directes:</span></h3><h1  class = 'S7'><span>Eliminació gaussiana</span></h1><div class="CodeBlock"><div class="inlineWrapper"><div  class = 'S8'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">function </span><span>[x] = eliminacionGaussiana(A,b) </span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    [h w] = size(A);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    U = [A b];</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">for </span><span>i = 1:h</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        </span><span style="color: rgb(34, 139, 34);">%%Pivot trivial</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        </span><span style="color: rgb(0, 0, 255);">if </span><span>U(i,i) == 0</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>            </span><span style="color: rgb(0, 0, 255);">for </span><span>k = (i+1):h</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>                </span><span style="color: rgb(0, 0, 255);">if </span><span>(U(k,i) ~= 0)</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>                    aux = U(k,:);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>                    U(k,:) = U(i,:);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>                    U(i,:) = aux;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>                </span><span style="color: rgb(0, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>            </span><span style="color: rgb(0, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        </span><span style="color: rgb(0, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        </span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        U(i,:) = U(i,:)/U(i,i);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        </span><span style="color: rgb(0, 0, 255);">if </span><span>(U(i,i) &lt; 0)</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>            U(i,:) = U(i,:)*-1;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        </span><span style="color: rgb(0, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        </span><span style="color: rgb(0, 0, 255);">for </span><span>j = (i+1):h</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>                U(j,:) = U(j,:)- U(j,i)*U(i,:);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        </span><span style="color: rgb(0, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    x = backsubs(U(:, 1:w), U(:, w+1 ))</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">end</span></span></div></div></div><h1  class = 'S7'><span>Mètode de Gauss-Jordan</span></h1><div class="CodeBlock"><div class="inlineWrapper"><div  class = 'S8'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">function </span><span>[x] = metodeGaussJordan(A,b)</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    [h w] = size(A);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    IA = [A eye(h,w)];</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">for </span><span>i = 1:h</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        </span><span style="color: rgb(34, 139, 34);">%%Pivot trivial</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        </span><span style="color: rgb(0, 0, 255);">if </span><span>IA(i,i) == 0</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>            </span><span style="color: rgb(0, 0, 255);">for </span><span>k = (i+1):h</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>                </span><span style="color: rgb(0, 0, 255);">if </span><span>(IA(k,i) ~= 0)</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>                    aux = IA(k,:);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>                    IA(k,:) = IA(i,:);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>                    IA(i,:) = aux;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>                </span><span style="color: rgb(0, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>            </span><span style="color: rgb(0, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        </span><span style="color: rgb(0, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        IA(i,:) = IA(i,:)/IA(i,i);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        </span><span style="color: rgb(0, 0, 255);">if </span><span>(IA(i,i) &lt; 0)</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>            IA(i,:) = IA(i,:)*-1;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        </span><span style="color: rgb(0, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        </span><span style="color: rgb(0, 0, 255);">for </span><span>j = 1:h</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>            </span><span style="color: rgb(0, 0, 255);">if </span><span>(i ~= j)</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>                IA(j,:) = IA(j,:)- IA(j,i)*IA(i,:);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>            </span><span style="color: rgb(0, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        </span><span style="color: rgb(0, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    x = IA(:,(w+1):end) * b; </span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">end</span></span></div></div></div><h1  class = 'S7'><span>Descomposició LU</span></h1><div class="CodeBlock"><div class="inlineWrapper"><div  class = 'S8'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">function </span><span>[x] = descomposicionLU(A,b)</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    [L,U,P]=lu(A);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    </span><span style="color: rgb(34, 139, 34);">%Ly = Pb</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    y=forward(L,P*b);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    </span><span style="color: rgb(34, 139, 34);">%Ux = y</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    x=backsubs(U,y);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    </span><span style="color: rgb(34, 139, 34);">%comprobar que el residuo es 0</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    r = b -A*x;</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">end</span></span></div></div></div><h1  class = 'S7'><span>Factorització QR</span></h1><div class="CodeBlock"><div class="inlineWrapper"><div  class = 'S8'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">function </span><span>[x] = factorizacionQR(A,b)</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    </span><span style="color: rgb(34, 139, 34);">%Q*R = A</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    [Q,R] = qr(A);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    </span><span style="color: rgb(34, 139, 34);">%1) Rx = Q'b</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    x = backsubs(R,Q'*b);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    </span><span style="color: rgb(34, 139, 34);">%comprobar que el residuo es 0</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    r = b -A*x;</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">end</span></span></div></div></div><h1  class = 'S7'><span>Factorització Txoleski</span></h1><div class="CodeBlock"><div class="inlineWrapper"><div  class = 'S8'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">function </span><span>[x] = factorizacionTxoleski(A,b)</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    </span><span style="color: rgb(34, 139, 34);">%R'Rx = b</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    R = chol(A)</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    </span><span style="color: rgb(34, 139, 34);">%1) R'y = b</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    y = forward(R',b)</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    </span><span style="color: rgb(34, 139, 34);">%2) Rx = y </span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    x = backsubs(R,y)</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">end</span></span></div></div></div><h3  class = 'S11'><span style=' text-decoration: underline;'>Mètodes iteratius:</span></h3><h1  class = 'S7'><span>Radio SOR - Jacobi (Plot)</span></h1><div class="CodeBlock"><div class="inlineWrapper"><div  class = 'S8'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">function </span><span>radioSOR_Jacobi_Plot(A)</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    D=diag(diag(A));</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    d=diag(1 ./diag(A));</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    L=tril(A,-1);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    U=triu(A,1);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    w = 0:0.01:2; n=length(w);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">for </span><span>k=1:n</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        Bwj=d*((1-w(k))*D-w(k)*(L+U));</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        rhoWJ(k)=max(abs(eig(Bwj)));</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    [w;rhoWJ]';</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    plot(w,rhoWJ,</span><span style="color: rgb(160, 32, 240);">'g'</span><span>), title(</span><span style="color: rgb(160, 32, 240);">'radios SOR - Jacobi'</span><span>), xlabel(</span><span style="color: rgb(160, 32, 240);">'w'</span><span>), ylabel(</span><span style="color: rgb(160, 32, 240);">'rho'</span><span>), legend(</span><span style="color: rgb(160, 32, 240);">'0&lt;w&lt;2'</span><span>)</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">end</span></span></div></div></div><h1  class = 'S7'><span>Radio SOR - Gauss-Seidel (Plot)</span></h1><div class="CodeBlock"><div class="inlineWrapper"><div  class = 'S8'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">function </span><span>radioSOR_Gauss_Seidel_Plot(A)</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    D=diag(diag(A));</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    L=tril(A,-1);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    U=triu(A,1);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    w = 0:0.01:2; n=length(w);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">for </span><span>k=1:n</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        d = inv(w(k)*L+D);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        Bwgs=d*((1-w(k))*D-w(k)*(U));</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        rhoWGS(k)=max(abs(eig(Bwgs)));</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    [w;rhoWGS]';</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    plot(w,rhoWGS,</span><span style="color: rgb(160, 32, 240);">'g'</span><span>), title(</span><span style="color: rgb(160, 32, 240);">'radios SOR - Gauss-Seidel'</span><span>), xlabel(</span><span style="color: rgb(160, 32, 240);">'w'</span><span>), ylabel(</span><span style="color: rgb(160, 32, 240);">'rho'</span><span>), legend(</span><span style="color: rgb(160, 32, 240);">'0&lt;w&lt;2'</span><span>)</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">end</span></span></div></div></div><h1  class = 'S7'><span>Metodo Jacobi</span></h1><div class="CodeBlock"><div class="inlineWrapper"><div  class = 'S8'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">function </span><span>[xj, i] = metodoJacobi(A,b,n)</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    D=diag(diag(A));</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    d=diag(1 ./diag(A));</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    Bj=-d*(A-D);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    rhoJ=max(abs(eig(Bj)));</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    cj=d*b;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">if </span><span>(rhoJ &gt;= 1) </span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        display(</span><span style="color: rgb(160, 32, 240);">'mètode de JACOBI divergent'</span><span>);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">else</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    </span><span style="color: rgb(34, 139, 34);">% Iteracions del mètode Jacobi</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        xj=zeros(size(b));</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        i = 1;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        control = 2;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        </span><span style="color: rgb(0, 0, 255);">while </span><span>i&lt;=n &amp;&amp; control &gt;eps</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>             new=Bj*xj+cj;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>             rj(i)=norm(A*new-b);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>             control=norm(new-xj)/norm(new);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>             xj=new;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>             i = i +1;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        </span><span style="color: rgb(0, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        i = i -1;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">end</span></span></div></div></div><h1  class = 'S7'><span>Metodo de Gauss-Seidel</span></h1><div class="CodeBlock"><div class="inlineWrapper"><div  class = 'S8'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">function </span><span>[xgs, i] = metodoGauss_Seidel(A,b,n)</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    D=diag(diag(A));</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    L=tril(A,-1);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    U=triu(A,1);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    d=inv(L+D);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    Bgs=-d*U;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    rhoGS=max(abs(eig(Bgs)));</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    cgs=d*b;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">if </span><span>(rhoGS &gt;= 1 &amp;&amp; false) </span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        display(</span><span style="color: rgb(160, 32, 240);">'mètode de Gauss-Seidel divergent'</span><span>);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">else</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    </span><span style="color: rgb(34, 139, 34);">% Iteracions del mètode Gauss-Seidel</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        B=Bgs; c=cgs;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        xgs=zeros(size(b));</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        i = 1;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        control = 2;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        </span><span style="color: rgb(0, 0, 255);">while </span><span>i&lt;=n &amp;&amp; control &gt;eps</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>            new=B*xgs+c;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>            rgs(i)=norm(A*new-b);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>            control=norm(new-xgs)/norm(new);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>            xgs=new;    </span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>            i = i +1;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        </span><span style="color: rgb(0, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        i = i-1;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">end</span></span></div></div></div><h1  class = 'S7'><span>w optima con Jacobi</span></h1><div class="CodeBlock"><div class="inlineWrapper"><div  class = 'S8'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">function </span><span>[wo, rhoWJ] = w_optima_Jacobi(A)</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    D=diag(diag(A));</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    d=diag(1 ./diag(A));</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    L=tril(A,-1);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    U=triu(A,1);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    Bj=-d*(A-D);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    rhoJ=max(abs(eig(Bj)));</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    wo = 2/(1+sqrt(1-(rhoJ^2)));</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    </span><span style="color: rgb(34, 139, 34);">%Obtener el radio espectral del coeficient espectral optim</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    Bwj=d*((1-wo)*D-wo*(L+U));</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    rhoWJ =max(abs(eig(Bwj)));</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">end</span></span></div></div></div><h1  class = 'S7'><span>Metodo de Jacobi con w</span></h1><div class="CodeBlock"><div class="inlineWrapper"><div  class = 'S8'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">function </span><span>[xjw, i] = metodoJacobi_con_w(A,b,w,n)    </span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    D=diag(diag(A));</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    L=tril(A,-1);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    U=triu(A,1);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    d=inv(D);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    Bwj=d*((1-w)*D-w*(L+U));</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    cwj = d*w*b;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    xjw=zeros(size(b));</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    i = 1;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    control = 2;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">while </span><span>i&lt;=n &amp;&amp; control &gt;eps </span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        new=Bwj*xjw+cwj;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        rjw(i)=norm(A*new-b);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        control=norm(new-xjw)/norm(new);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        xjw=new;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        i = i +1;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    i = i-1;</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">end</span></span></div></div></div><h1  class = 'S7'><span>w optima con Gauss-Seidel</span></h1><div class="CodeBlock"><div class="inlineWrapper"><div  class = 'S8'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">function </span><span>[wo, rhoGS] = w_optima_Gauss_Seidel(A)</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    D=diag(diag(A));</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    L=tril(A,-1);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    U=triu(A,1);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    d=inv(L+D);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    Bgs=-d*U;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    rhoGS=max(abs(eig(Bgs)));</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    wo = 2/(1+sqrt(1-(rhoGS^2)));</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    </span><span style="color: rgb(34, 139, 34);">%Obtener el radio espectral del coeficient espectral optim</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    d = inv(wo*L+D);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    Bwgs=d*((1-wo)*D-wo*(U));</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    rhoGS=max(abs(eig(Bwgs)));</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">end</span></span></div></div></div><h1  class = 'S7'><span>Metodo de Gauss-Seidel con w</span></h1><div class="CodeBlock"><div class="inlineWrapper"><div  class = 'S8'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">function </span><span>[xgsw,i] = metodoGauss_Seidel_con_w(A,b,w,n)</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    D=diag(diag(A));</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    L=tril(A,-1);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    U=triu(A,1);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    d=inv(D+w*L);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    Bw=d*((1-w)*D-w*U);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    cw=d*w*b;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    xgsw=zeros(size(b));</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    i = 1;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    control = 2;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">while </span><span>i&lt;=n &amp;&amp; control &gt; eps</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        new=Bw*xgsw+cw;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        rgsw(i)=norm(A*new-b);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        control=norm(new-xgsw)/norm(new);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        xgsw=new;  </span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        i = i+1;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    i = i -1;</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">end</span></span></div></div></div><h3  class = 'S11'><span style=' text-decoration: underline;'>Mínims quadrats.(Sistema lineales sobredeterminados)</span></h3><div  class = 'S12'><span>Valor aproximado de un sistema de equaciones que es incompatible SI(Sistema Incompatible).</span></div><div class="CodeBlock"><div class="inlineWrapper"><div  class = 'S8'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">function </span><span>[x] = minimos_cuadrados(A,b)</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    </span><span style="color: rgb(34, 139, 34);">%A'*Ax=A'b</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    C = A'*A;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    d = A'*b;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    x = C\d;</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">end</span></span></div></div></div><h2  class = 'S10'><span>Càlcul de vectors i valors propis</span></h2><div class="CodeBlock"><div class="inlineWrapper"><div  class = 'S6'><span style="white-space: pre;"><span style="color: rgb(34, 139, 34);">%</span><span style="color: rgb(34, 139, 34);">[V,D] = eig(A)</span></span></div></div></div><h1  class = 'S7'><span>Mètodo de la potència</span></h1><div class="CodeBlock"><div class="inlineWrapper"><div  class = 'S8'><span style="white-space: pre;"><span style="color: rgb(34, 139, 34);">%max(abs(eig(A)))</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">function </span><span>[vap,vep,iteracions,residu] = metodo_potencia_valor_propio_modulo_maximo(A, x, kmax, tol)</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    </span><span style="color: rgb(34, 139, 34);">% mètode de la potencia, mòdul màxim</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    k=0; control =1;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">while </span><span>(control &gt; tol) &amp;&amp; (k &lt;kmax)</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        y = x;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        z = A*x;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        [m,j] = max(abs(z));    </span><span style="color: rgb(34, 139, 34);">% norma infinit</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        x = z/z(j);    </span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        k = k+1;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        control = norm(x-y,</span><span style="color: rgb(160, 32, 240);">'inf'</span><span>);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    vep = x;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    vap = m;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    iteracions = k-1;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    residu = norm(A*vep-vap*vep);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span style="color: rgb(34, 139, 34);">%min(abs(eig(A)))</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">function </span><span>[vap,vep,iteracions,residu] = metodo_potencia_valor_propio_modulo_minimo(A, x, kmax, tol)</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    </span><span style="color: rgb(34, 139, 34);">% mètode de la potencia, mòdul minimo</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    k=0; control =1; </span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">while </span><span>(control &gt; tol) &amp;&amp; (k &lt;kmax)</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        y = x;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        z = A\x;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        [m,j] = max(abs(z));  </span><span style="color: rgb(34, 139, 34);">% norma infinit</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        x = z/z(j);        </span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        k = k+1;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        control = norm(x-y,</span><span style="color: rgb(160, 32, 240);">'inf'</span><span>);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    vep = x;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    vap = 1/m;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    iteracions = k-1;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    residu = norm(A*vep-vap*vep);</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">end</span></span></div></div></div><h1  class = 'S7'><span>Metodo de la potencia - Quocient Rayleigh</span></h1><div class="CodeBlock"><div class="inlineWrapper"><div  class = 'S8'><span style="white-space: pre;"><span style="color: rgb(34, 139, 34);">%max(abs(eig(A)))</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">function </span><span>[vap,vep,iteracions,residu] = metodo_potencia_valor_propio_modulo_maximo_quociente_rayleigh(A, x, kmax, tol)</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    </span><span style="color: rgb(34, 139, 34);">% mètode de la potencia, mòdul màxim</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    k=0; control =1;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">while </span><span>(control &gt; tol) &amp;&amp; (k &lt;kmax)</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        y = x;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        z = A*x;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        m = (x'*z)/(x'*x);   </span><span style="color: rgb(34, 139, 34);">% Quocient de Rayleigh</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        x = z/m;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        [m,j] = max(abs(z));    </span><span style="color: rgb(34, 139, 34);">% norma infinit</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        x = z/z(j);    </span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        k = k+1;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        control = norm(x-y,</span><span style="color: rgb(160, 32, 240);">'inf'</span><span>);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    vep = x;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    vap = m;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    iteracions = k-1;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    residu = norm(A*vep-vap*vep);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span style="color: rgb(34, 139, 34);">%min(abs(eig(A)))</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">function </span><span>[vap,vep,iteracions,residu] = metodo_potencia_valor_propio_modulo_minimo_quociente_rayleigh(A, x, kmax, tol)</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    </span><span style="color: rgb(34, 139, 34);">% mètode de la potencia, mòdul minimo</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    k=0; control =1; </span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">while </span><span>(control &gt; tol) &amp;&amp; (k &lt;kmax)</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        y = x;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        z = A\x;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        m = (x'*z)/(x'*x);   </span><span style="color: rgb(34, 139, 34);">% Quocient de Rayleigh</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        x = z/m;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        [m,j] = max(abs(z));  </span><span style="color: rgb(34, 139, 34);">% norma infinit</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        x = z/z(j);        </span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        k = k+1;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        control = norm(x-y,</span><span style="color: rgb(160, 32, 240);">'inf'</span><span>);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    vep = x;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    vap = 1/m;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    iteracions = k-1;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    residu = norm(A*vep-vap*vep);</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">end</span></span></div></div></div><h1  class = 'S7'><span>Mètode QR</span></h1><div class="CodeBlock"><div class="inlineWrapper"><div  class = 'S8'><span style="white-space: pre;"><span style="color: rgb(34, 139, 34);">%eig(A)</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">function </span><span>[vap,iteracions] = metodoQR(A, kmax, tol)</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    k=0; ,n=1;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    Ak=A;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">while </span><span>(k&lt;kmax &amp;&amp; n &gt; tol)</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        [Q,R]=qr(Ak);     </span><span style="color: rgb(34, 139, 34);">% Q*R = A</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        Ak = R*Q;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        n = norm(tril(Ak,-1),</span><span style="color: rgb(160, 32, 240);">'inf'</span><span>);</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>        k=k+1;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    </span><span style="color: rgb(0, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    iteracions = k;</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    vap = diag(Ak);</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">end</span></span></div></div></div><h1  class = 'S7'><span>Valors singulars - SVD(Singular value decomposition)</span></h1><div class="CodeBlock"><div class="inlineWrapper"><div  class = 'S6'><span style="white-space: pre;"><span style="color: rgb(34, 139, 34);">%[U, S, V] = svd(A);</span></span></div></div></div><div  class = 'S13'><span></span></div><div class="CodeBlock"><div class="inlineWrapper"><div  class = 'S8'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">function </span><span>[valors_singulars] = SVD(A)</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    </span><span style="color: rgb(34, 139, 34);">%A = U*S*V'</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    </span><span style="color: rgb(34, 139, 34);">%Apseudoinversa = V'*Spesudoinversa'*U</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    valors_singulars = sqrt(eig(A'*A));</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    </span><span style="color: rgb(34, 139, 34);">%V'*V; identitat</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    </span><span style="color: rgb(34, 139, 34);">%U'*U; identitat</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre;"><span>    </span><span style="color: rgb(34, 139, 34);">%pinv(A); Apseudoinversa</span></span></div></div><div class="inlineWrapper"><div  class = 'S9'><span style="white-space: pre;"><span style="color: rgb(0, 0, 255);">end</span></span></div></div></div><div  class = 'S13'></div></div><br>
+<!-- 
+##### SOURCE BEGIN #####
+A = [1 0 -1; 1 2 1;2 2 3]
+%x0 = [1 1 1]';
+Niter = Inf;
+tol = eps;
+%[vap,vep,~,~]= metodo_potencia_valor_propio_modulo_maximo(A,x0, Niter, tol)
+%[vap,vep,~,~] = metodo_potencia_valor_propio_modulo_minimo(A, x0, Niter, tol)
+%[vap,vep,~,~]= metodo_potencia_valor_propio_modulo_maximo_quociente_rayleigh(A,x0, Niter, tol)
+%[vap,vep,~,~]= metodo_potencia_valor_propio_modulo_minimo_quociente_rayleigh(A, x0, Niter, tol)
+%eig(A)
+%[V,S] = eig(A)
+%max(abs(eig(A)))
+%min(abs(eig(A)))
+%[vap,iteracions] = metodoQR(A, Niter, tol)
+%A = [1 0 -1; 1 2 1;2 2 3];
+%[U, S, V] = svd(A)
+%[valors_singulars] = SVD(A)
+%%
+
+%% FORWARD. Forward elimination
+
+function x = forward(L,x)
+% FORWARD. Forward elimination.
+% For lower triangular L, x = forward(L,b) solves L*x = b.
+[n,n] = size(L);
+x(1) = x(1)/L(1,1);
+for k = 2:n
+   j = 1:k-1;
+   x(k) = (x(k) - L(k,j)*x(j))/L(k,k);
+end
+end
+%% BACKSUBS.  Back substitution.
+
+function x = backsubs(U,x)
+% BACKSUBS.  Back substitution.
+% For upper triangular U, x = backsubs(U,b) solves U*x = b.
+[n,n] = size(U);
+x(n) = x(n)/U(n,n);
+for k = n-1:-1:1
+   j = k+1:n;
+   x(k) = (x(k) - U(k,j)*x(j))/U(k,k);
+end
+end
+
+%% 
+%% REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH
+%% 
+%% Resolució de sistemes lineals no homogenis
+
+%x = A\b
+%% Mètodes directes:
+%% Eliminació gaussiana
+
+function [x] = eliminacionGaussiana(A,b) 
+    [h w] = size(A);
+    U = [A b];
+    for i = 1:h
+        %%Pivot trivial
+        if U(i,i) == 0
+            for k = (i+1):h
+                if (U(k,i) ~= 0)
+                    aux = U(k,:);
+                    U(k,:) = U(i,:);
+                    U(i,:) = aux;
+                end
+            end
+        end
+        
+        U(i,:) = U(i,:)/U(i,i);
+        if (U(i,i) < 0)
+            U(i,:) = U(i,:)*-1;
+        end
+        for j = (i+1):h
+                U(j,:) = U(j,:)- U(j,i)*U(i,:);
+        end
+    end
+    x = backsubs(U(:, 1:w), U(:, w+1 ))
+end
+%% Mètode de Gauss-Jordan
+
+function [x] = metodeGaussJordan(A,b)
+    [h w] = size(A);
+    IA = [A eye(h,w)];
+    for i = 1:h
+        %%Pivot trivial
+        if IA(i,i) == 0
+            for k = (i+1):h
+                if (IA(k,i) ~= 0)
+                    aux = IA(k,:);
+                    IA(k,:) = IA(i,:);
+                    IA(i,:) = aux;
+                end
+            end
+        end
+        IA(i,:) = IA(i,:)/IA(i,i);
+        if (IA(i,i) < 0)
+            IA(i,:) = IA(i,:)*-1;
+        end
+        for j = 1:h
+            if (i ~= j)
+                IA(j,:) = IA(j,:)- IA(j,i)*IA(i,:);
+            end
+        end
+    end
+    x = IA(:,(w+1):end) * b; 
+end
+%% Descomposició LU
+
+function [x] = descomposicionLU(A,b)
+    [L,U,P]=lu(A);
+    %Ly = Pb
+    y=forward(L,P*b);
+    %Ux = y
+    x=backsubs(U,y);
+    %comprobar que el residuo es 0
+    r = b -A*x;
+end
+%% Factorització QR
+
+function [x] = factorizacionQR(A,b)
+    %Q*R = A
+    [Q,R] = qr(A);
+    %1) Rx = Q'b
+    x = backsubs(R,Q'*b);
+    %comprobar que el residuo es 0
+    r = b -A*x;
+end
+%% Factorització Txoleski
+
+function [x] = factorizacionTxoleski(A,b)
+    %R'Rx = b
+    R = chol(A)
+    %1) R'y = b
+    y = forward(R',b)
+    %2) Rx = y 
+    x = backsubs(R,y)
+end
+%% Mètodes iteratius:
+%% Radio SOR - Jacobi (Plot)
+
+function radioSOR_Jacobi_Plot(A)
+    D=diag(diag(A));
+    d=diag(1 ./diag(A));
+    L=tril(A,-1);
+    U=triu(A,1);
+    w = 0:0.01:2; n=length(w);
+    for k=1:n
+        Bwj=d*((1-w(k))*D-w(k)*(L+U));
+        rhoWJ(k)=max(abs(eig(Bwj)));
+    end
+    [w;rhoWJ]';
+    plot(w,rhoWJ,'g'), title('radios SOR - Jacobi'), xlabel('w'), ylabel('rho'), legend('0<w<2')
+end
+%% Radio SOR - Gauss-Seidel (Plot)
+
+function radioSOR_Gauss_Seidel_Plot(A)
+    D=diag(diag(A));
+    L=tril(A,-1);
+    U=triu(A,1);
+    w = 0:0.01:2; n=length(w);
+    for k=1:n
+        d = inv(w(k)*L+D);
+        Bwgs=d*((1-w(k))*D-w(k)*(U));
+        rhoWGS(k)=max(abs(eig(Bwgs)));
+    end
+    [w;rhoWGS]';
+    plot(w,rhoWGS,'g'), title('radios SOR - Gauss-Seidel'), xlabel('w'), ylabel('rho'), legend('0<w<2')
+end
+%% Metodo Jacobi
+
+function [xj, i] = metodoJacobi(A,b,n)
+    D=diag(diag(A));
+    d=diag(1 ./diag(A));
+    Bj=-d*(A-D);
+    rhoJ=max(abs(eig(Bj)));
+    cj=d*b;
+    if (rhoJ >= 1) 
+        display('mètode de JACOBI divergent');
+    else
+    % Iteracions del mètode Jacobi
+        xj=zeros(size(b));
+        i = 1;
+        control = 2;
+        while i<=n && control >eps
+             new=Bj*xj+cj;
+             rj(i)=norm(A*new-b);
+             control=norm(new-xj)/norm(new);
+             xj=new;
+             i = i +1;
+        end
+        i = i -1;
+    end
+end
+%% Metodo de Gauss-Seidel
+
+function [xgs, i] = metodoGauss_Seidel(A,b,n)
+    D=diag(diag(A));
+    L=tril(A,-1);
+    U=triu(A,1);
+    d=inv(L+D);
+    Bgs=-d*U;
+    rhoGS=max(abs(eig(Bgs)));
+    cgs=d*b;
+    if (rhoGS >= 1 && false) 
+        display('mètode de Gauss-Seidel divergent');
+    else
+    % Iteracions del mètode Gauss-Seidel
+        B=Bgs; c=cgs;
+        xgs=zeros(size(b));
+        i = 1;
+        control = 2;
+        while i<=n && control >eps
+            new=B*xgs+c;
+            rgs(i)=norm(A*new-b);
+            control=norm(new-xgs)/norm(new);
+            xgs=new;    
+            i = i +1;
+        end
+        i = i-1;
+    end
+end
+%% w optima con Jacobi
+
+function [wo, rhoWJ] = w_optima_Jacobi(A)
+    D=diag(diag(A));
+    d=diag(1 ./diag(A));
+    L=tril(A,-1);
+    U=triu(A,1);
+    Bj=-d*(A-D);
+    rhoJ=max(abs(eig(Bj)));
+    wo = 2/(1+sqrt(1-(rhoJ^2)));
+    %Obtener el radio espectral del coeficient espectral optim
+    Bwj=d*((1-wo)*D-wo*(L+U));
+    rhoWJ =max(abs(eig(Bwj)));
+end
+%% Metodo de Jacobi con w
+
+function [xjw, i] = metodoJacobi_con_w(A,b,w,n)    
+    D=diag(diag(A));
+    L=tril(A,-1);
+    U=triu(A,1);
+    d=inv(D);
+    Bwj=d*((1-w)*D-w*(L+U));
+    cwj = d*w*b;
+    xjw=zeros(size(b));
+    i = 1;
+    control = 2;
+    while i<=n && control >eps 
+        new=Bwj*xjw+cwj;
+        rjw(i)=norm(A*new-b);
+        control=norm(new-xjw)/norm(new);
+        xjw=new;
+        i = i +1;
+    end
+    i = i-1;
+end
+%% w optima con Gauss-Seidel
+
+function [wo, rhoGS] = w_optima_Gauss_Seidel(A)
+    D=diag(diag(A));
+    L=tril(A,-1);
+    U=triu(A,1);
+    d=inv(L+D);
+    Bgs=-d*U;
+    rhoGS=max(abs(eig(Bgs)));
+    wo = 2/(1+sqrt(1-(rhoGS^2)));
+    %Obtener el radio espectral del coeficient espectral optim
+    d = inv(wo*L+D);
+    Bwgs=d*((1-wo)*D-wo*(U));
+    rhoGS=max(abs(eig(Bwgs)));
+end
+%% Metodo de Gauss-Seidel con w
+
+function [xgsw,i] = metodoGauss_Seidel_con_w(A,b,w,n)
+    D=diag(diag(A));
+    L=tril(A,-1);
+    U=triu(A,1);
+    d=inv(D+w*L);
+    Bw=d*((1-w)*D-w*U);
+    cw=d*w*b;
+    xgsw=zeros(size(b));
+    i = 1;
+    control = 2;
+    while i<=n && control > eps
+        new=Bw*xgsw+cw;
+        rgsw(i)=norm(A*new-b);
+        control=norm(new-xgsw)/norm(new);
+        xgsw=new;  
+        i = i+1;
+    end
+    i = i -1;
+end
+%% Mínims quadrats.(Sistema lineales sobredeterminados)
+% Valor aproximado de un sistema de equaciones que es incompatible SI(Sistema 
+% Incompatible).
+
+function [x] = minimos_cuadrados(A,b)
+    %A'*Ax=A'b
+    C = A'*A;
+    d = A'*b;
+    x = C\d;
+end
+%% Càlcul de vectors i valors propis
+
+%[V,D] = eig(A)
+%% Mètodo de la potència
+
+%max(abs(eig(A)))
+function [vap,vep,iteracions,residu] = metodo_potencia_valor_propio_modulo_maximo(A, x, kmax, tol)
+    % mètode de la potencia, mòdul màxim
+    k=0; control =1;
+    while (control > tol) && (k <kmax)
+        y = x;
+        z = A*x;
+        [m,j] = max(abs(z));    % norma infinit
+        x = z/z(j);    
+        k = k+1;
+        control = norm(x-y,'inf');
+    end
+    vep = x;
+    vap = m;
+    iteracions = k-1;
+    residu = norm(A*vep-vap*vep);
+end
+%min(abs(eig(A)))
+function [vap,vep,iteracions,residu] = metodo_potencia_valor_propio_modulo_minimo(A, x, kmax, tol)
+    % mètode de la potencia, mòdul minimo
+    k=0; control =1; 
+    while (control > tol) && (k <kmax)
+        y = x;
+        z = A\x;
+        [m,j] = max(abs(z));  % norma infinit
+        x = z/z(j);        
+        k = k+1;
+        control = norm(x-y,'inf');
+    end
+    vep = x;
+    vap = 1/m;
+    iteracions = k-1;
+    residu = norm(A*vep-vap*vep);
+end
+%% Metodo de la potencia - Quocient Rayleigh
+
+%max(abs(eig(A)))
+function [vap,vep,iteracions,residu] = metodo_potencia_valor_propio_modulo_maximo_quociente_rayleigh(A, x, kmax, tol)
+    % mètode de la potencia, mòdul màxim
+    k=0; control =1;
+    while (control > tol) && (k <kmax)
+        y = x;
+        z = A*x;
+        m = (x'*z)/(x'*x);   % Quocient de Rayleigh
+        x = z/m;
+        [m,j] = max(abs(z));    % norma infinit
+        x = z/z(j);    
+        k = k+1;
+        control = norm(x-y,'inf');
+    end
+    vep = x;
+    vap = m;
+    iteracions = k-1;
+    residu = norm(A*vep-vap*vep);
+end
+%min(abs(eig(A)))
+function [vap,vep,iteracions,residu] = metodo_potencia_valor_propio_modulo_minimo_quociente_rayleigh(A, x, kmax, tol)
+    % mètode de la potencia, mòdul minimo
+    k=0; control =1; 
+    while (control > tol) && (k <kmax)
+        y = x;
+        z = A\x;
+        m = (x'*z)/(x'*x);   % Quocient de Rayleigh
+        x = z/m;
+        [m,j] = max(abs(z));  % norma infinit
+        x = z/z(j);        
+        k = k+1;
+        control = norm(x-y,'inf');
+    end
+    vep = x;
+    vap = 1/m;
+    iteracions = k-1;
+    residu = norm(A*vep-vap*vep);
+end
+%% Mètode QR
+
+%eig(A)
+function [vap,iteracions] = metodoQR(A, kmax, tol)
+    k=0; ,n=1;
+    Ak=A;
+    while (k<kmax && n > tol)
+        [Q,R]=qr(Ak);     % Q*R = A
+        Ak = R*Q;
+        n = norm(tril(Ak,-1),'inf');
+        k=k+1;
+    end
+    iteracions = k;
+    vap = diag(Ak);
+end
+%% Valors singulars - SVD(Singular value decomposition)
+
+%[U, S, V] = svd(A);
+%% 
+% 
+
+function [valors_singulars] = SVD(A)
+    %A = U*S*V'
+    %Apseudoinversa = V'*Spesudoinversa'*U
+    valors_singulars = sqrt(eig(A'*A));
+    %V'*V; identitat
+    %U'*U; identitat
+    %pinv(A); Apseudoinversa
+end
+%% 
+%
+##### SOURCE END #####
+--></body></html>
